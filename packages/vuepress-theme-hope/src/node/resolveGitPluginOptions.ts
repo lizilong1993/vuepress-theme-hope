@@ -7,16 +7,12 @@ import type { ThemeHopeOptions } from "../types";
 export const resolveGitPluginOptions = (
   options: ThemeHopeOptions
 ): GitPluginOptions | boolean => {
-  if (options.themePlugins?.git === false) {
-    return false;
-  }
+  if (options.themePlugins?.git === false) return false;
 
   const enableUpdatedTime = options.lastUpdated !== false;
   const enableContributors = options.contributors !== false;
 
-  if (!enableUpdatedTime && !enableContributors) {
-    return false;
-  }
+  if (!enableUpdatedTime && !enableContributors) return false;
 
   return {
     updatedTime: enableUpdatedTime,

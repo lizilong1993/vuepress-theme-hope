@@ -6,7 +6,7 @@ import OutboundLink from "./components/global/OutboundLink.vue";
 
 import "./styles/index.styl";
 
-declare const __THEME_DEFAULT_DOCSEARCH__: boolean;
+declare const DOCSEARCH_ENABLE: boolean;
 
 const clientAppEnhance: ClientAppEnhance = ({ app }) => {
   /* eslint-disable vue/match-component-file-name */
@@ -20,7 +20,7 @@ const clientAppEnhance: ClientAppEnhance = ({ app }) => {
   app.component("OutboundLink", OutboundLink);
 
   // register a mock `<Docsearch>` if docsearch plugin is not enabled
-  if (!__THEME_DEFAULT_DOCSEARCH__) {
+  if (!DOCSEARCH_ENABLE) {
     app.component("Docsearch", () => null);
   }
   /* eslint-enable vue/match-component-file-name */

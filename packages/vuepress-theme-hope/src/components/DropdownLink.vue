@@ -71,10 +71,10 @@
 import { computed, defineComponent, ref, toRefs, watch } from "vue";
 import type { PropType } from "vue";
 import { useRoute } from "vue-router";
-import type { NavGroup, NavItem } from "../types";
+import type { NavGroup, NavItem, ThemeHopeOptions } from "../types";
 import DropdownTransition from "./DropdownTransition.vue";
 import NavLink from "./NavLink.vue";
-import { useThemeData } from "@vuepress/client";
+import { useThemeLocaleData } from "@vuepress/client";
 
 export default defineComponent({
   name: "DropdownLink",
@@ -99,10 +99,10 @@ export default defineComponent({
 
     const open = ref(false);
     const route = useRoute();
-    const themeData = useThemeData();
+    const themeLocale = useThemeLocaleData<ThemeHopeOptions>();
 
     const iconPrefix = computed(() => {
-      const { iconPrefix } = themeData.value;
+      const { iconPrefix } = themeLocale.value;
 
       return iconPrefix === "" ? "" : (iconPrefix as string) || "icon-";
     });

@@ -33,9 +33,9 @@
 <script lang="ts">
 import { computed, defineComponent, toRefs } from "vue";
 import type { PropType } from "vue";
-import { useSiteData, useThemeData } from "@vuepress/client";
+import { useSiteData, useThemeLocaleData } from "@vuepress/client";
 import { isLinkHttp, isLinkMailto, isLinkTel } from "@vuepress/shared";
-import type { NavLink } from "../types";
+import type { NavLink, ThemeHopeOptions } from "../types";
 
 export default defineComponent({
   name: "NavLink",
@@ -51,7 +51,7 @@ export default defineComponent({
 
   setup(props) {
     const site = useSiteData();
-    const themeData = useThemeData();
+    const themeLocale = useThemeLocaleData<ThemeHopeOptions>();
 
     const { item } = toRefs(props);
 
@@ -103,7 +103,7 @@ export default defineComponent({
     const ariaLabel = computed(() => item.value.ariaLabel || item.value.text);
 
     const iconPrefix = computed(() => {
-      const { iconPrefix } = themeData.value;
+      const { iconPrefix } = themeLocale.value;
 
       return iconPrefix === "" ? "" : (iconPrefix as string) || "icon-";
     });

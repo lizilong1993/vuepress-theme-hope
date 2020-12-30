@@ -7,9 +7,7 @@ import type { ThemeHopeOptions } from "../types";
 export const resolveActiveHeaderLinksPluginOptions = (
   options: ThemeHopeOptions
 ): ActiveHeaderLinksPluginOptions | boolean => {
-  if (options.themePlugins?.activeHeaderLinks === false) {
-    return false;
-  }
+  if (options.themePlugins?.activeHeaderLinks === false) return false;
 
   return {
     headerLinkSelector: ".sidebar-link",

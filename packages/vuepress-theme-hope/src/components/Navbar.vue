@@ -31,7 +31,7 @@
 
     <div class="navbar-links-wrapper" :style="linksWrapperStyle">
       <slot name="before" />
-      <!-- <ThemeColor /> -->
+      <ThemeColor />
       <!-- <AlgoliaSearchBox v-if="isAlgoliaSearch" :options="algoliaConfig" /> -->
       <!-- <SearchBox
         v-else-if="
@@ -46,9 +46,11 @@
 </template>
 
 <script lang="ts">
-import { useThemeData } from "@vuepress/client";
+import { useThemeLocaleData } from "@vuepress/client";
 import { computed, defineComponent, onMounted, ref } from "vue";
+import type { ThemeHopeOptions } from "../types";
 import NavbarLinks from "./NavbarLinks.vue";
+import ThemeColor from "./Theme/ThemeColor.vue";
 import ToggleSidebarButton from "./ToggleSidebarButton.vue";
 
 const getCssValue = (
@@ -77,13 +79,14 @@ export default defineComponent({
 
   components: {
     NavbarLinks,
+    ThemeColor,
     ToggleSidebarButton,
   },
 
   emits: ["toggle-sidebar"],
 
   setup() {
-    const themeData = useThemeData();
+    const themeLocale = useThemeLocaleData<ThemeHopeOptions>();
     const isMobile = ref(false);
     const navbar = ref<HTMLElement | null>(null);
     const siteInfo = ref<HTMLElement | null>(null);
@@ -97,7 +100,7 @@ export default defineComponent({
     });
 
     const canHide = computed(() => {
-      const autoHide = themeData.value.navAutoHide;
+      const autoHide = themeLocale.value.navAutoHide;
 
       return autoHide !== "none" && (autoHide === "always" || isMobile.value);
     });
@@ -117,6 +120,7 @@ export default defineComponent({
         } else {
           isMobile.value = false;
           linksWrapperMaxWidth.value =
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             navbar.value!.offsetWidth -
             NAVBAR_VERTICAL_PADDING -
             (siteInfo.value?.offsetWidth || 0);

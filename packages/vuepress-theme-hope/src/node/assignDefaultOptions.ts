@@ -48,9 +48,7 @@ export const assignDefaultOptions = (options: ThemeHopeOptions): void => {
     options.locales = {};
   }
 
-  if (!options.locales["/"]) {
-    options.locales["/"] = {};
-  }
+  if (!options.locales["/"]) options.locales["/"] = {};
 
   Object.assign(options, {
     ...defaultOptions,

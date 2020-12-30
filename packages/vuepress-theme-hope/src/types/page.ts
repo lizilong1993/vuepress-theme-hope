@@ -1,5 +1,5 @@
 import type { GitPluginPageData } from "@vuepress/plugin-git";
 
-export interface DefaultThemePageData extends GitPluginPageData {
+export interface ThemeHopePageData extends GitPluginPageData {
   filePathRelative: string;
 }

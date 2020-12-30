@@ -32,9 +32,10 @@ export const sidebarItemsSymbol: InjectionKey<SidebarItemsRef> = Symbol(
  */
 export const useSidebarItems = (): SidebarItemsRef => {
   const sidebarItems = inject(sidebarItemsSymbol);
-  if (!sidebarItems) {
+
+  if (!sidebarItems)
     throw new Error("useSidebarItems() is called without provider.");
-  }
+
   return sidebarItems;
 };
 
@@ -56,21 +57,16 @@ export const resolveSidebarItems = (): SidebarItemsRef => {
 
   // resolve sidebar items according to the config
   return computed<ResolvedSidebarItem[]>(() => {
-    if (frontmatter.value.home === true || sidebarConfig.value === false) {
+    if (frontmatter.value.home === true || sidebarConfig.value === false)
       return [];
-    }
 
-    if (sidebarConfig.value === "auto") {
-      return resolveAutoSidebarItems();
-    }
+    if (sidebarConfig.value === "auto") return resolveAutoSidebarItems();
 
-    if (isArray(sidebarConfig.value)) {
+    if (isArray(sidebarConfig.value))
       return resolveArraySidebarItems(sidebarConfig.value);
-    }
 
-    if (isPlainObject(sidebarConfig.value)) {
+    if (isPlainObject(sidebarConfig.value))
       return resolveMultiSidebarItems(sidebarConfig.value);
-    }
 
     return [];
   });
@@ -113,35 +109,28 @@ export const resolveArraySidebarItems = (
 
   return sidebarConfig.map(
     (item): ResolvedSidebarItem => {
-      if (isString(item)) {
-        return useNavLink(item);
-      }
-      if (!item.isGroup) {
-        return item as ResolvedSidebarItem;
-      }
+      if (isString(item)) return useNavLink(item);
+
+      if (!item.isGroup) return item as ResolvedSidebarItem;
 
       return {
         ...item,
         children: item.children.map(
           (subItem): ResolvedSidebarItem => {
-            let childItem: ResolvedSidebarItem;
-            if (isString(subItem)) {
-              childItem = useNavLink(subItem);
-            } else {
-              childItem = subItem as ResolvedSidebarItem;
-            }
+            const childItem: ResolvedSidebarItem = isString(subItem)
+              ? useNavLink(subItem)
+              : (subItem as ResolvedSidebarItem);
 
             // if the sidebar item is current page and children is not set
             // use headers of current page as children
             if (
               childItem.link === route.path &&
               childItem.children === undefined
-            ) {
+            )
               return {
                 ...childItem,
                 children: page.value.headers.map(headerToSidebarItem),
               };
-            }
 
             return childItem;
           }

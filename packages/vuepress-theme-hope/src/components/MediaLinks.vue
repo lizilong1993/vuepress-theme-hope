@@ -17,8 +17,9 @@
 </template>
 
 <script lang="ts">
-import { usePageFrontmatter, useThemeData } from "@vuepress/client";
+import { usePageFrontmatter, useThemeLocaleData } from "@vuepress/client";
 import { computed, defineComponent } from "vue";
+import type { ThemeHopeOptions } from "../types";
 import Baidu from "./icons/media/Baidu.vue";
 import Bitbucket from "./icons/media/Bitbucket.vue";
 import Dingding from "./icons/media/Dingding.vue";
@@ -47,7 +48,7 @@ import Weibo from "./icons/media/Weibo.vue";
 import Whatsapp from "./icons/media/Whatsapp.vue";
 import Youtube from "./icons/media/Youtube.vue";
 import Zhihu from "./icons/media/Zhihu.vue";
-import { BlogMedia } from "./types";
+import type { BlogMedia } from "../types";
 
 const medias: BlogMedia[] = [
   "Baidu",
@@ -121,7 +122,7 @@ export default defineComponent({
 
   setup() {
     const pageFrontmatter = usePageFrontmatter();
-    const themeData = useThemeData();
+    const themeLocale = useThemeLocaleData<ThemeHopeOptions>();
 
     const mediaLink = computed<Partial<Record<BlogMedia, string>> | false>(
       () => {
@@ -131,8 +132,8 @@ export default defineComponent({
           ? false
           : typeof medialink === "object"
           ? (medialink as Partial<Record<BlogMedia, string>>)
-          : themeData.value.blog
-          ? themeData.value.blog.links || false
+          : themeLocale.value.blog
+          ? themeLocale.value.blog.links || false
           : false;
       }
     );

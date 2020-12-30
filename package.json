@@ -11,6 +11,7 @@
     "build": "tsc --build",
     "copy": "lerna run copy --stream",
     "copy-watch": "lerna run copy --parallel -- --watch",
+    "demo:build": "vuepress build demo/src",
     "demo:serve": "vuepress dev demo/src",
     "dev": "tsc --build --watch",
     "lerna:bootstrap": "lerna bootstrap",

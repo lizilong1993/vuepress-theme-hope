@@ -8,13 +8,9 @@ import type { ThemeHopeOptions } from "../types";
 export const resolveDocsearchPluginOptions = (
   options: ThemeHopeOptions
 ): DocsearchPluginOptions | boolean => {
-  if (options.themePlugins?.docsearch === false) {
-    return false;
-  }
+  if (options.themePlugins?.docsearch === false) return false;
 
-  if (!options.docsearch?.apiKey || !options.docsearch?.indexName) {
-    return false;
-  }
+  if (!options.docsearch?.apiKey || !options.docsearch?.indexName) return false;
 
   // docsearch feature might not be commonly used
   // so we don't put it into dependencies of default theme
@@ -22,6 +18,7 @@ export const resolveDocsearchPluginOptions = (
     logger.warn(
       "[@vuepress/theme-default] if you want to enable docsearch feature, you should install @vuepress/plugin-docsearch manually"
     );
+
     return false;
   }
 

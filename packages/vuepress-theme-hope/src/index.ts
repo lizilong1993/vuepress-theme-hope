@@ -32,7 +32,7 @@ export const defaultTheme: Theme<ThemeHopeOptions> = (options, app) => {
 
     define: {
       // to determine if we have to register a mock `<Docsearch>` component
-      __THEME_DEFAULT_DOCSEARCH__: docsearchOptions !== false,
+      DOCSEARCH_ENABLE: docsearchOptions !== false,
     },
 
     // use the relative file path to generate edit link
@@ -56,7 +56,7 @@ export const defaultTheme: Theme<ThemeHopeOptions> = (options, app) => {
       ["@vuepress/git", resolveGitPluginOptions(options)],
       ["@vuepress/medium-zoom", resolveMediumZoomPluginOptions(options)],
       ["@vuepress/nprogress", options.themePlugins?.nprogress !== false],
-      ["@vuepress/palette-stylus", resolvePaletteStylusPluginOptions(options)],
+      ["@vuepress/palette-stylus", resolvePaletteStylusPluginOptions()],
     ],
   };
 };

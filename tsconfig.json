@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.base.json",
+  "references": [
+    { "path": "./packages/vuepress-theme-hope/tsconfig.build.json" }
+  ],
+  "include": []
+}

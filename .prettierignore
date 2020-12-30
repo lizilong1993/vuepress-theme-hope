@@ -1,0 +1,11 @@
+# Vuepress Output
+**/dist/**
+
+# Node modules
+**/node_modules/**
+
+# Dist files
+lib/
+
+packages/**/*.js
+packages/**/*.d.ts

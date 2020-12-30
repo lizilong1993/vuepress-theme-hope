@@ -1,0 +1,20 @@
+{
+  "name": "test",
+  "version": "1.7.9",
+  "private": true,
+  "description": "Tests for vuepress-theme-hope",
+  "license": "MIT",
+  "author": "Mr.Hope",
+  "scripts": {
+    "build": "vuepress build src",
+    "clean-serve": "vuepress dev src --no-cache",
+    "eject": "vuepress eject-hope src",
+    "serve": "vuepress dev src"
+  },
+  "devDependencies": {
+    "@vuepress/plugin-pwa": "2.0.0-alpha.13",
+    "@vuepress/plugin-pwa-popup": "2.0.0-alpha.13",
+    "vuepress": "2.0.0-alpha.13",
+    "vuepress-theme-hope": "2.0.0-alpha.0"
+  }
+}

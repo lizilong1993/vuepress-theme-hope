@@ -2,12 +2,14 @@
   <RouterLink
     v-if="isRouterLink"
     class="nav-link"
+    :class="{ active: isExact }"
     :to="item.link"
     :exact="isExact"
-    :aria-label="linkAriaLabel"
+    :aria-label="ariaLabel"
     v-bind="$attrs"
   >
     <slot name="before" />
+    <i v-if="item.icon" :class="`iconfont ${iconPrefix}${item.icon}`" />
     {{ item.text }}
     <slot name="after" />
   </RouterLink>
@@ -15,12 +17,13 @@
     v-else
     class="nav-link external"
     :href="item.link"
-    :rel="linkRel"
-    :target="linkTarget"
-    :aria-label="linkAriaLabel"
+    :rel="rel"
+    :target="target"
+    :aria-label="ariaLabel"
     v-bind="$attrs"
   >
     <slot name="before" />
+    <i v-if="item.icon" :class="`iconfont ${iconPrefix}${item.icon}`" />
     {{ item.text }}
     <OutboundLink v-if="isBlankTarget" />
     <slot name="after" />
@@ -30,7 +33,7 @@
 <script lang="ts">
 import { computed, defineComponent, toRefs } from "vue";
 import type { PropType } from "vue";
-import { useSiteData } from "@vuepress/client";
+import { useSiteData, useThemeData } from "@vuepress/client";
 import { isLinkHttp, isLinkMailto, isLinkTel } from "@vuepress/shared";
 import type { NavLink } from "../types";
 
@@ -48,23 +51,29 @@ export default defineComponent({
 
   setup(props) {
     const site = useSiteData();
+    const themeData = useThemeData();
+
     const { item } = toRefs(props);
 
     // if the link has http protocol
     const hasHttpProtocol = computed(() => isLinkHttp(item.value.link));
+
     // if the link has non-http protocol
     const hasNonHttpProtocal = computed(
       () => isLinkMailto(item.value.link) || isLinkTel(item.value.link)
     );
+
     // resolve the `target` attr
-    const linkTarget = computed(() => {
+    const target = computed(() => {
       if (hasNonHttpProtocal.value) return null;
       if (item.value.target) return item.value.target;
       if (hasHttpProtocol.value) return "_blank";
       return null;
     });
+
     // if the `target` attr is '_blank'
-    const isBlankTarget = computed(() => linkTarget.value === "_blank");
+    const isBlankTarget = computed(() => target.value === "_blank");
+
     // is `<RouterLink>` or not
     const isRouterLink = computed(
       () =>
@@ -72,6 +81,7 @@ export default defineComponent({
         !hasNonHttpProtocal.value &&
         !isBlankTarget.value
     );
+
     // is the `exact` prop of `<RouterLink>` should be true
     const isExact = computed(() => {
       const localeKeys = Object.keys(site.value.locales);
@@ -80,25 +90,32 @@ export default defineComponent({
       }
       return item.value.link === "/";
     });
+
     // resolve the `rel` attr
-    const linkRel = computed(() => {
+    const rel = computed(() => {
       if (hasNonHttpProtocal.value) return null;
       if (item.value.rel) return item.value.rel;
       if (isBlankTarget.value) return "noopener noreferrer";
       return null;
     });
+
     // resolve the `aria-label` attr
-    const linkAriaLabel = computed(
-      () => item.value.ariaLabel || item.value.text
-    );
+    const ariaLabel = computed(() => item.value.ariaLabel || item.value.text);
+
+    const iconPrefix = computed(() => {
+      const { iconPrefix } = themeData.value;
+
+      return iconPrefix === "" ? "" : (iconPrefix as string) || "icon-";
+    });
 
     return {
+      ariaLabel,
+      iconPrefix,
       isBlankTarget,
       isExact,
       isRouterLink,
-      linkRel,
-      linkTarget,
-      linkAriaLabel,
+      rel,
+      target,
     };
   },
 });

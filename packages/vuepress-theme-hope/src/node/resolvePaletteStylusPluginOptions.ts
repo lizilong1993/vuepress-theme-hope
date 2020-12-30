@@ -1,11 +1,11 @@
 import type { PaletteStylusPluginOptions } from "@vuepress/plugin-palette-stylus";
-import type { DefaultThemeOptions } from "../types";
+import type { ThemeHopeOptions } from "../types";
 
 /**
  * Resolve options for @vuepress/plugin-palette-stylus
  */
 export const resolvePaletteStylusPluginOptions = (
-  _options: DefaultThemeOptions
+  _options: ThemeHopeOptions
 ): PaletteStylusPluginOptions | boolean => {
   // this plugin should not be disabled now
   return {

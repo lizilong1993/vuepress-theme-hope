@@ -1,5 +1,5 @@
 import type { ContainerPluginOptions } from "@vuepress/plugin-container";
-import type { DefaultThemeOptions } from "../types";
+import type { ThemeHopeOptions } from "../types";
 
 /**
  * Resolve options for @vuepress/plugin-container
@@ -7,7 +7,7 @@ import type { DefaultThemeOptions } from "../types";
  * For custom blocks default title
  */
 export const resolveContainerPluginOptions = (
-  options: DefaultThemeOptions,
+  options: ThemeHopeOptions,
   type: "tip" | "warning" | "danger"
 ): ContainerPluginOptions | boolean => {
   if (options.themePlugins?.container?.[type] === false) {
@@ -39,7 +39,7 @@ export const resolveContainerPluginOptions = (
  * For details block
  */
 export const resolveContainerPluginOptionsForDetails = (
-  options: DefaultThemeOptions
+  options: ThemeHopeOptions
 ): ContainerPluginOptions | boolean => {
   if (options.themePlugins?.container?.details === false) {
     return false;

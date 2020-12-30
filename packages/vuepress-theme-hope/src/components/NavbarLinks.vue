@@ -1,162 +1,21 @@
 <template>
   <nav v-if="navbarLinks.length" class="navbar-links">
     <div v-for="item in navbarLinks" :key="item.link" class="navbar-links-item">
-      <template v-if="item.children">
-        <DropdownLink :item="item" />
-      </template>
-
-      <template v-else>
-        <NavLink :item="item" />
-      </template>
+      <DropdownLink v-if="item.children" :item="item" />
+      <NavLink v-else :item="item" />
     </div>
   </nav>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import type { ComputedRef } from "vue";
-import { useRouter } from "vue-router";
 import {
-  useRouteLocale,
-  useThemeLocaleData,
-  useSiteLocaleData,
-} from "@vuepress/client";
-import { isString } from "@vuepress/shared";
-import { useNavLink } from "../composables";
-import type {
-  DefaultThemeOptions,
-  NavbarItem,
-  NavbarGroup,
-  ResolvedNavbarItem,
-} from "../types";
-import { resolveRepoType } from "../utils";
+  useNavbarConfig,
+  useNavbarSelectLanguage,
+  useNavbarRepo,
+} from "../composables";
 import DropdownLink from "./DropdownLink.vue";
 import NavLink from "./NavLink.vue";
-
-/**
- * Get navbar config of select language dropdown
- */
-const useNavbarSelectLanguage = (): ComputedRef<ResolvedNavbarItem[]> => {
-  const router = useRouter();
-  const routeLocale = useRouteLocale();
-  const siteLocale = useSiteLocaleData();
-  const themeLocale = useThemeLocaleData<DefaultThemeOptions>();
-
-  return computed<ResolvedNavbarItem[]>(() => {
-    const localePaths = Object.keys(siteLocale.value.locales);
-    // do not display language selection dropdown if there is only one language
-    if (localePaths.length < 2) {
-      return [];
-    }
-    const currentPath = router.currentRoute.value.path;
-    const currentFullPath = router.currentRoute.value.fullPath;
-
-    const languageDropdown: ResolvedNavbarItem = {
-      text: themeLocale.value.selectLanguageText ?? "unkown language",
-      ariaLabel: themeLocale.value.selectLanguageAriaLabel ?? "unkown language",
-      children: localePaths.map((targetLocalePath) => {
-        // target locale config of this langauge link
-        const targetSiteLocale =
-          siteLocale.value.locales?.[targetLocalePath] ?? {};
-        const targetThemeLocale =
-          themeLocale.value.locales?.[targetLocalePath] ?? {};
-        const targetLang = `${targetSiteLocale.lang}`;
-
-        const text = targetThemeLocale.selectLanguageName ?? targetLang;
-        let link;
-
-        if (targetLang === siteLocale.value.lang) {
-          // if the target language is current language
-          // stay at current link
-          link = currentFullPath;
-        } else {
-          // if the target language is not current language
-          // try to link to the corresponding page of current page
-          // or fallback to homepage
-          const targetLocalePage = currentPath.replace(
-            routeLocale.value,
-            targetLocalePath
-          );
-          if (
-            router.getRoutes().some((item) => item.path === targetLocalePage)
-          ) {
-            link = targetLocalePage;
-          } else {
-            link = targetThemeLocale.home ?? targetLocalePath;
-          }
-        }
-
-        return {
-          text,
-          link,
-        };
-      }),
-    };
-
-    return [languageDropdown];
-  });
-};
-
-/**
- * Get navbar config of repository link
- */
-const useNavbarRepo = (): ComputedRef<ResolvedNavbarItem[]> => {
-  const themeLocale = useThemeLocaleData<DefaultThemeOptions>();
-
-  const repo = computed(() => themeLocale.value.repo);
-  const repoType = computed(() =>
-    repo.value ? resolveRepoType(repo.value) : null
-  );
-
-  const repoLink = computed(() => {
-    if (repoType.value === "GitHub") {
-      return `https://github.com/${repo.value}`;
-    }
-    return repo.value;
-  });
-
-  const repoLabel = computed(() => {
-    if (!repoLink.value) return null;
-    if (themeLocale.value.repoLabel) return themeLocale.value.repoLabel;
-    if (repoType.value === null) return "Source";
-    return repoType.value;
-  });
-
-  return computed(() => {
-    if (!repoLink.value || !repoLabel.value) {
-      return [];
-    }
-
-    return [
-      {
-        text: repoLabel.value,
-        link: repoLink.value,
-      },
-    ];
-  });
-};
-
-const resolveNavbarItem = (
-  item: NavbarItem | NavbarGroup | string
-): ResolvedNavbarItem => {
-  if (isString(item)) {
-    return useNavLink(item);
-  }
-  if ((item as NavbarGroup).children) {
-    return {
-      ...item,
-      children: (item as NavbarGroup).children.map(resolveNavbarItem),
-    };
-  }
-  return item as ResolvedNavbarItem;
-};
-
-const useNavbarConfig = (): ComputedRef<ResolvedNavbarItem[]> => {
-  const themeLocale = useThemeLocaleData<DefaultThemeOptions>();
-  return computed(() =>
-    (themeLocale.value.navbar || []).map(resolveNavbarItem)
-  );
-};
 
 export default defineComponent({
   name: "NavbarLinks",
@@ -183,3 +42,65 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="stylus">
+@require '../styles/palette'
+
+.navbar-links
+  display inline-block
+
+  .nav-link
+    line-height 1.4rem
+    color var(--dark-grey)
+
+    @media (max-width $MQMobile)
+      color var(--text-color)
+
+      &:hover, &.active
+        color var(--accent-color)
+
+    &.active
+      color var(--accent-color)
+
+  .navbar-links-item
+    position relative
+    display inline-block
+    margin-left 1.5rem
+    line-height 2rem
+
+    @media (max-width $MQMobile)
+      margin-left 0
+
+    &:first-child
+      margin-left 0
+
+  .repo-link
+    color var(--dark-grey)
+    margin-left 1.5rem
+
+    @media (max-width $MQMobile)
+      margin-left 0
+
+@media (min-width $MQMobile)
+  .navbar-links-item > .nav-link
+    &::after
+      position absolute
+      content ' '
+      left 0
+      right 0
+      bottom 0px
+      height 2px
+      background var(--accent-color-l10)
+      border-radius 1px
+      visibility hidden
+      transform scaleX(0)
+      transition transform 0.3s ease-in-out
+
+    &:hover, &.active
+      &::after
+        visibility visible
+        transform scaleX(1)
+
+    &.active
+      color var(--accent-color)
+</style>

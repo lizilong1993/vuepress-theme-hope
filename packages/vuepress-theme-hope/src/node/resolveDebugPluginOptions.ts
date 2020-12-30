@@ -1,11 +1,11 @@
 import type { App } from "@vuepress/core";
-import type { DefaultThemeOptions } from "../types";
+import type { ThemeHopeOptions } from "../types";
 
 /**
  * Resolve options for @vuepress/plugin-debug
  */
 export const resolveDebugPluginOptions = (
-  options: DefaultThemeOptions,
+  options: ThemeHopeOptions,
   app: App
 ): boolean => {
   if (options.themePlugins?.debug !== undefined) {

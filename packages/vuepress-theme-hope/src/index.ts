@@ -11,12 +11,12 @@ import {
   resolveMediumZoomPluginOptions,
   resolvePaletteStylusPluginOptions,
 } from "./node";
-import type { DefaultThemeOptions } from "./types";
+import type { ThemeHopeOptions } from "./types";
 
 export * from "./node";
 export * from "./types";
 
-export const defaultTheme: Theme<DefaultThemeOptions> = (options, app) => {
+export const defaultTheme: Theme<ThemeHopeOptions> = (options, app) => {
   assignDefaultOptions(options);
 
   const docsearchOptions = resolveDocsearchPluginOptions(options);

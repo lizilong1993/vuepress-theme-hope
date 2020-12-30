@@ -1,11 +1,11 @@
 import type { GitPluginOptions } from "@vuepress/plugin-git";
-import type { DefaultThemeOptions } from "../types";
+import type { ThemeHopeOptions } from "../types";
 
 /**
  * Resolve options for @vuepress/plugin-git
  */
 export const resolveGitPluginOptions = (
-  options: DefaultThemeOptions
+  options: ThemeHopeOptions
 ): GitPluginOptions | boolean => {
   if (options.themePlugins?.git === false) {
     return false;

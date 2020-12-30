@@ -2,8 +2,7 @@ import type { LocaleData, ThemeConfig } from "@vuepress/core";
 import type { DocsearchPluginOptions } from "@vuepress/plugin-docsearch";
 import type { NavbarConfig, SidebarConfig } from "./nav";
 
-export interface DefaultThemeOptions
-  extends ThemeConfig<DefaultThemeLocaleData> {
+export interface ThemeHopeOptions extends ThemeConfig<DefaultThemeLocaleData> {
   /**
    * Options for docsearch / algolia
    */

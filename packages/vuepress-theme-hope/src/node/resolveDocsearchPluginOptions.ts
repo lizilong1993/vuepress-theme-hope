@@ -1,12 +1,12 @@
 import type { DocsearchPluginOptions } from "@vuepress/plugin-docsearch";
 import { logger, requireResolve } from "@vuepress/utils";
-import type { DefaultThemeOptions } from "../types";
+import type { ThemeHopeOptions } from "../types";
 
 /**
  * Resolve options for @vuepress/plugin-docsearch
  */
 export const resolveDocsearchPluginOptions = (
-  options: DefaultThemeOptions
+  options: ThemeHopeOptions
 ): DocsearchPluginOptions | boolean => {
   if (options.themePlugins?.docsearch === false) {
     return false;

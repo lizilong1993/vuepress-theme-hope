@@ -5,11 +5,11 @@ import type { VNode } from "vue";
 export default defineComponent({
   name: "CodeGroup",
 
-  setup(_, { slots }) {
+  setup(_props, { slots }) {
     // index of current active item
     const activeIndex = ref(-1);
 
-    return () => {
+    return (): VNode | null => {
       // NOTICE: here we put the `slots.default()` inside the render function to make
       // the slots reactive, otherwise the slot content won't be changed once the
       // `setup()` function of current component is called
@@ -58,23 +58,21 @@ export default defineComponent({
       return h("div", { class: "code-group" }, [
         h(
           "div",
-          { class: "code-group__nav" },
+          { class: "code-group-nav" },
           h(
             "ul",
-            { class: "code-group__ul" },
-            items.map((vnode, i) =>
+            { class: "code-group-ul" },
+            items.map((vnode, index) =>
               h(
                 "li",
-                { class: "code-group__li" },
+                { class: "code-group-li" },
                 h(
                   "button",
                   {
-                    class: `code-group__nav-tab${
-                      i === activeIndex.value
-                        ? " code-group__nav-tab-active"
-                        : ""
+                    class: `code-group-nav-tab${
+                      index === activeIndex.value ? " active" : ""
                     }`,
-                    onClick: () => (activeIndex.value = i),
+                    onClick: () => (activeIndex.value = index),
                   },
                   vnode.props.title
                 )
@@ -88,3 +86,45 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="stylus">
+@require '../../styles/palette'
+
+.code-group-nav
+  margin-top 0.85rem
+  // 2 * margin + border-radius of <pre> tag
+  margin-bottom calc(-1.7rem - 6px)
+  padding-bottom calc(1.7rem - 6px)
+  padding-left 10px
+  padding-top 10px
+  border-top-left-radius 6px
+  border-top-right-radius 6px
+  background-color var(--code-bgcolor)
+
+  @media (max-width $MQMobileNarrow)
+    margin-left -1.5rem
+    margin-right -1.5rem
+    border-radius 0
+
+.code-group-ul
+  display inline-flex
+  margin auto 0
+  padding-left 0
+  list-style none
+
+.code-group-nav-tab
+  border 0
+  padding 5px
+  cursor pointer
+  background-color transparent
+  font-size 0.85em
+  line-height 1.4
+  color rgba(255, 255, 255, 0.9)
+  font-weight 600
+
+  &:focus
+    outline none
+
+  &.active
+    border-bottom var(--accent-color) 1px solid
+</style>

@@ -1,5 +1,5 @@
 import { removeLeadingSlash, removeEndingSlash } from "@vuepress/shared";
-import { resolveRepoType } from "./resolveRepoType";
+import { resolveRepoType } from "./repoType";
 
 export const editLinkPatternGithub = ":repo/edit/:branch/:path";
 export const editLinkPatternGitlab = ":repo/-/edit/:branch/:path";

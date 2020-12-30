@@ -1,11 +1,11 @@
 import type { ActiveHeaderLinksPluginOptions } from "@vuepress/plugin-active-header-links";
-import type { DefaultThemeOptions } from "../types";
+import type { ThemeHopeOptions } from "../types";
 
 /**
  * Resolve options for @vuepress/plugin-active-header-links
  */
 export const resolveActiveHeaderLinksPluginOptions = (
-  options: DefaultThemeOptions
+  options: ThemeHopeOptions
 ): ActiveHeaderLinksPluginOptions | boolean => {
   if (options.themePlugins?.activeHeaderLinks === false) {
     return false;

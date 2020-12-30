@@ -1,11 +1,5 @@
-<template>
-  <div class="code-group-item" :class="{ 'code-group-item__active': active }">
-    <slot />
-  </div>
-</template>
-
-<script>
-import { defineComponent } from "vue";
+<script lang="ts">
+import { VNode, defineComponent, h } from "vue";
 
 export default defineComponent({
   name: "CodeGroupItem",
@@ -21,5 +15,22 @@ export default defineComponent({
       default: false,
     },
   },
+
+  setup(props, { slots }) {
+    return (): VNode =>
+      h("div", { class: { "code-group-item": true, active: props.active } }, [
+        slots.default?.(),
+      ]);
+  },
 });
 </script>
+
+<style lang="stylus">
+@require '../../styles/palette'
+
+.code-group-item
+  display none
+
+  &.active
+    display block
+</style>

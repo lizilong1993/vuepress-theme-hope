@@ -14,7 +14,7 @@ import {
   resolveLocalePath,
 } from "@vuepress/shared";
 import type {
-  DefaultThemeOptions,
+  ThemeHopeOptions,
   SidebarConfigArray,
   SidebarConfigObject,
   ResolvedSidebarItem,
@@ -45,12 +45,12 @@ export const useSidebarItems = (): SidebarItemsRef => {
  */
 export const resolveSidebarItems = (): SidebarItemsRef => {
   const frontmatter = usePageFrontmatter();
-  const themeLocale = useThemeLocaleData<DefaultThemeOptions>();
+  const themeLocale = useThemeLocaleData<ThemeHopeOptions>();
 
   // get sidebar config from frontmatter > themeConfig
   const sidebarConfig = computed(
     () =>
-      (frontmatter.value.sidebar as DefaultThemeOptions["sidebar"]) ||
+      (frontmatter.value.sidebar as ThemeHopeOptions["sidebar"]) ||
       themeLocale.value.sidebar
   );
 

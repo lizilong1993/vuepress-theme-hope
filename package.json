@@ -9,10 +9,11 @@
   ],
   "scripts": {
     "build": "tsc --build",
+    "clean": "lerna run clean --stream",
     "copy": "lerna run copy --stream",
     "copy-watch": "lerna run copy --parallel -- --watch",
-    "demo:build": "yarn worksapce demo build",
-    "demo:serve": "yarn worksapce demo serve",
+    "demo:build": "yarn workspace demo build",
+    "demo:serve": "yarn workspace demo serve",
     "dev": "tsc --build --watch",
     "lerna:bootstrap": "lerna bootstrap",
     "lerna:clean": "lerna clean",

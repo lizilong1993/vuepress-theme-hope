@@ -5,17 +5,34 @@ import {
   useThemeLocaleData,
   useSiteLocaleData,
 } from "@vuepress/client";
-import { isString } from "@vuepress/shared";
-import { useNavLink } from "./useNavLink";
+import { isLinkHttp, isString } from "@vuepress/shared";
+import { useResolveRouteWithRedirect } from "./resolveRouteWithRedirect";
 import { resolveRepoType } from "../utils/repoType";
 
 import type { ComputedRef } from "vue";
 import type {
   ThemeHopeOptions,
   NavbarItem,
+  NavLink,
   NavbarGroup,
   ResolvedNavbarItem,
 } from "../types";
+
+/**
+ * Resolve NavLink props from string
+ *
+ * @example
+ * - Input: '/README.md'
+ * - Output: { text: 'Home', link: '/' }
+ */
+export const useNavLink = (item: string): NavLink => {
+  const resolved = useResolveRouteWithRedirect(item);
+
+  return {
+    text: resolved.meta.title ?? item,
+    link: resolved.name === "404" ? item : resolved.fullPath,
+  };
+};
 
 /**
  * Get navbar config of select language dropdown
@@ -30,47 +47,46 @@ export const useNavbarSelectLanguage = (): ComputedRef<
 
   return computed<ResolvedNavbarItem[]>(() => {
     const localePaths = Object.keys(siteLocale.value.locales);
-    // do not display language selection dropdown if there is only one language
-    if (localePaths.length < 2) {
-      return [];
-    }
-    const currentPath = router.currentRoute.value.path;
-    const currentFullPath = router.currentRoute.value.fullPath;
 
+    // do not display language selection dropdown if there is only one language
+    if (localePaths.length < 2) return [];
+
+    const { fullPath, path } = router.currentRoute.value;
     const languageDropdown: ResolvedNavbarItem = {
-      text: themeLocale.value.selectLanguageText ?? "unkown language",
-      ariaLabel: themeLocale.value.selectLanguageAriaLabel ?? "unkown language",
+      text: themeLocale.value.selectLanguageText ?? "Unkown language",
+      ariaLabel: themeLocale.value.selectLanguageAriaLabel ?? "Unkown language",
       children: localePaths.map((targetLocalePath) => {
         // target locale config of this langauge link
         const targetSiteLocale =
           siteLocale.value.locales?.[targetLocalePath] ?? {};
         const targetThemeLocale =
           themeLocale.value.locales?.[targetLocalePath] ?? {};
-        const targetLang = targetSiteLocale.lang || "";
 
+        const targetLang = targetSiteLocale.lang ?? "";
         const text = targetThemeLocale.selectLanguageName ?? targetLang;
-        let link;
 
-        if (targetLang === siteLocale.value.lang) {
-          // if the target language is current language, stay at current link
-          link = currentFullPath;
-        } else {
-          // if the target language is not current language
-          // try to link to the corresponding page of current page
-          // or fallback to homepage
-          const targetLocalePage = currentPath.replace(
-            routeLocale.value,
-            targetLocalePath
-          );
+        // if the target language is current language, stay at current link
+        if (targetLang === siteLocale.value.lang)
+          return {
+            text,
+            link: fullPath,
+          };
 
-          if (router.getRoutes().some((item) => item.path === targetLocalePage))
-            link = targetLocalePage;
-          else link = targetThemeLocale.home ?? targetLocalePath;
-        }
+        // if the target language is not current language
+        // try to link to the corresponding page of current page
+        // or fallback to homepage
+        const targetLocalePage = path.replace(
+          routeLocale.value,
+          targetLocalePath
+        );
 
         return {
           text,
-          link,
+          link: router
+            .getRoutes()
+            .some((item) => item.path === targetLocalePage)
+            ? targetLocalePage
+            : targetThemeLocale.home ?? targetLocalePath,
         };
       }),
     };
@@ -84,39 +100,30 @@ export const useNavbarSelectLanguage = (): ComputedRef<
  */
 export const useNavbarRepo = (): ComputedRef<ResolvedNavbarItem[]> => {
   const themeLocale = useThemeLocaleData<ThemeHopeOptions>();
-
-  const repo = computed(() => themeLocale.value.repo);
-
-  const repoType = computed(() =>
-    repo.value ? resolveRepoType(repo.value) : null
+  const repoType = computed(() => resolveRepoType(themeLocale.value.repo));
+  const repoLink = computed(() =>
+    themeLocale.value.repo
+      ? isLinkHttp(themeLocale.value.repo)
+        ? `https://github.com/${themeLocale.value.repo}`
+        : themeLocale.value.repo
+      : null
   );
 
-  const repoLink = computed(() => {
-    if (repoType.value === "GitHub")
-      return `https://github.com/${(repo as ComputedRef<string>).value}`;
-
-    return repo.value;
-  });
-
   const repoLabel = computed(() =>
-    !repoLink.value
-      ? null
-      : themeLocale.value.repoLabel
-      ? themeLocale.value.repoLabel
-      : repoType.value === null
-      ? "Source"
-      : repoType.value
+    repoLink.value
+      ? themeLocale.value.repoLabel ?? repoType.value ?? "Source"
+      : null
   );
 
   return computed(() =>
-    !repoLink.value || !repoLabel.value
-      ? []
-      : [
+    repoLink.value && repoLabel.value
+      ? [
           {
             text: repoLabel.value,
             link: repoLink.value,
           },
         ]
+      : []
   );
 };
 
@@ -125,12 +132,12 @@ const resolveNavbarItem = (
 ): ResolvedNavbarItem => {
   if (isString(item)) return useNavLink(item);
 
-  if ((item as NavbarGroup).children) {
+  if ((item as NavbarGroup).children)
     return {
       ...item,
       children: (item as NavbarGroup).children.map(resolveNavbarItem),
     };
-  }
+
   return item as ResolvedNavbarItem;
 };
 

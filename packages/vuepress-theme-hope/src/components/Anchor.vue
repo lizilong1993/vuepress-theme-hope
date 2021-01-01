@@ -1,6 +1,6 @@
 <script lang="ts">
-import { defineComponent, h } from "vue";
-import type { VNode, PropType } from "vue";
+import { h } from "vue";
+import type { FunctionalComponent, VNode, PropType } from "vue";
 import { SidebarHeader, groupSidebarHeaders } from "../util/sidebar";
 import { RouteLocation, useRoute } from "vue-router";
 import { isActive } from "../utils";
@@ -68,42 +68,44 @@ const renderChildren = ({
   );
 };
 
-export default defineComponent({
-  name: "Anchor",
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const Anchor: FunctionalComponent<{ header: SidebarHeader[] }> = ({
+  header = [],
+}) => {
+  const pageFrontmatter = usePageFrontmatter();
+  const themeLocaleData = useThemeLocaleData();
+  const route = useRoute();
+  const maxDepth =
+    (pageFrontmatter.value.sidebarDepth ||
+      (themeLocaleData.value.sidebarDepth as number | undefined) ||
+      themeLocaleData.value.sidebarDepth ||
+      2) + 1;
+  const children = groupSidebarHeaders(header);
 
-  props: {
-    header: {
-      type: Array as PropType<SidebarHeader[]>,
-      default: (): SidebarHeader[] => [],
-    },
+  return h("div", { attrs: { class: "anchor-place-holder" } }, [
+    h("aside", { attrs: { id: "anchor" } }, [
+      h("div", { class: "anchor-wrapper" }, [
+        renderChildren({
+          children,
+          path: route.path,
+          route,
+          maxDepth,
+        }),
+      ]),
+    ]),
+  ]);
+};
+
+Anchor.displayName = "Anchor";
+
+Anchor.props = {
+  header: {
+    type: Array as PropType<SidebarHeader[]>,
+    default: (): SidebarHeader[] => [],
   },
+};
 
-  setup(props) {
-    const pageFrontmatter = usePageFrontmatter();
-    const themeLocaleData = useThemeLocaleData();
-    const route = useRoute();
-    const maxDepth =
-      (pageFrontmatter.value.sidebarDepth ||
-        (themeLocaleData.value.sidebarDepth as number | undefined) ||
-        themeLocaleData.value.sidebarDepth ||
-        2) + 1;
-    const children = groupSidebarHeaders(props.header);
-
-    return (): VNode =>
-      h("div", { attrs: { class: "anchor-place-holder" } }, [
-        h("aside", { attrs: { id: "anchor" } }, [
-          h("div", { class: "anchor-wrapper" }, [
-            renderChildren({
-              children,
-              path: route.path,
-              route,
-              maxDepth,
-            }),
-          ]),
-        ]),
-      ]);
-  },
-});
+export default Anchor;
 </script>
 
 <style lang="stylus">

@@ -82,14 +82,14 @@ export interface DefaultThemeLocaleData extends LocaleData {
    *
    * Logo to display in navbar
    */
-  logo?: null | string;
+  logo?: string;
 
   /**
    * Navbar repository config
    *
    * Used for the repository link of navbar
    */
-  repo?: null | string;
+  repo?: string;
 
   /**
    * Navbar repository config

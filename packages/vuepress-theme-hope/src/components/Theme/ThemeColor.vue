@@ -1,6 +1,6 @@
 <template>
+  <!-- v-click-outside="clickOutside" -->
   <button
-    v-click-outside="clickOutside"
     class="color-button"
     :class="{ select: showMenu }"
     @click="showMenu = !showMenu"

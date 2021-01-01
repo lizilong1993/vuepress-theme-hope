@@ -3,8 +3,6 @@ import type { ThemeHopeOptions, DefaultThemeLocaleData } from "../types";
 const defaultOptions: ThemeHopeOptions = {
   // navbar
   navbar: [],
-  logo: null,
-  repo: null,
   selectLanguageText: "Languages",
   selectLanguageAriaLabel: "Select language",
 

@@ -1,11 +1,12 @@
 import { computed } from "vue";
-import type { ComputedRef } from "vue";
 import {
   usePageData,
   usePageFrontmatter,
   useSiteLocaleData,
   useThemeLocaleData,
 } from "@vuepress/client";
+
+import type { ComputedRef } from "vue";
 import type {
   ThemeHopeOptions,
   ThemeHopePageData,
@@ -21,9 +22,8 @@ export const useEditNavLink = (): ComputedRef<null | NavLinkType> => {
   return computed(() => {
     const showEditLink =
       frontmatter.value.editLink ?? themeLocale.value.editLink ?? true;
-    if (!showEditLink) {
-      return null;
-    }
+
+    if (!showEditLink) return null;
 
     const {
       repo,

@@ -1,25 +1,26 @@
 import { computed, inject } from "vue";
-import type { ComputedRef, InjectionKey } from "vue";
 import { useRoute } from "vue-router";
 import {
   usePageData,
   usePageFrontmatter,
   useThemeLocaleData,
 } from "@vuepress/client";
-import type { PageHeader } from "@vuepress/client";
 import {
   isArray,
   isPlainObject,
   isString,
   resolveLocalePath,
 } from "@vuepress/shared";
+import { useNavLink } from "./navbar";
+
+import type { ComputedRef, InjectionKey } from "vue";
+import type { PageHeader } from "@vuepress/client";
 import type {
   ThemeHopeOptions,
   SidebarConfigArray,
   SidebarConfigObject,
   ResolvedSidebarItem,
 } from "../types";
-import { useNavLink } from "./useNavLink";
 
 export type SidebarItemsRef = ComputedRef<ResolvedSidebarItem[]>;
 
@@ -37,39 +38,6 @@ export const useSidebarItems = (): SidebarItemsRef => {
     throw new Error("useSidebarItems() is called without provider.");
 
   return sidebarItems;
-};
-
-/**
- * Resolve sidebar items global computed
- *
- * It should only be resolved and provided once
- */
-export const resolveSidebarItems = (): SidebarItemsRef => {
-  const frontmatter = usePageFrontmatter();
-  const themeLocale = useThemeLocaleData<ThemeHopeOptions>();
-
-  // get sidebar config from frontmatter > themeConfig
-  const sidebarConfig = computed(
-    () =>
-      (frontmatter.value.sidebar as ThemeHopeOptions["sidebar"]) ||
-      themeLocale.value.sidebar
-  );
-
-  // resolve sidebar items according to the config
-  return computed<ResolvedSidebarItem[]>(() => {
-    if (frontmatter.value.home === true || sidebarConfig.value === false)
-      return [];
-
-    if (sidebarConfig.value === "auto") return resolveAutoSidebarItems();
-
-    if (isArray(sidebarConfig.value))
-      return resolveArraySidebarItems(sidebarConfig.value);
-
-    if (isPlainObject(sidebarConfig.value))
-      return resolveMultiSidebarItems(sidebarConfig.value);
-
-    return [];
-  });
 };
 
 /**
@@ -151,4 +119,34 @@ export const resolveMultiSidebarItems = (
   const matchedSidebarConfig = sidebarConfig[sidebarPath] ?? [];
 
   return resolveArraySidebarItems(matchedSidebarConfig);
+};
+
+/**
+ * Resolve sidebar items global computed
+ *
+ * It should only be resolved and provided once
+ */
+export const resolveSidebarItems = (): SidebarItemsRef => {
+  const frontmatter = usePageFrontmatter();
+  const themeLocale = useThemeLocaleData<ThemeHopeOptions>();
+
+  // get sidebar config from frontmatter > themeConfig
+  const sidebarConfig = computed(
+    () =>
+      (frontmatter.value.sidebar as ThemeHopeOptions["sidebar"]) ||
+      themeLocale.value.sidebar
+  );
+
+  // resolve sidebar items according to the config
+  return computed<ResolvedSidebarItem[]>(() =>
+    frontmatter.value.home === true || sidebarConfig.value === false
+      ? []
+      : sidebarConfig.value === "auto"
+      ? resolveAutoSidebarItems()
+      : isArray(sidebarConfig.value)
+      ? resolveArraySidebarItems(sidebarConfig.value)
+      : isPlainObject(sidebarConfig.value)
+      ? resolveMultiSidebarItems(sidebarConfig.value)
+      : []
+  );
 };

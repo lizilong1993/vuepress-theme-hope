@@ -11,7 +11,7 @@
       data-balloon-pos="up"
     >
       <span class="sr-only" v-text="link.icon" />
-      <Component :is="link.icon" />
+      <component :is="link.icon" />
     </a>
   </div>
 </template>
@@ -19,36 +19,36 @@
 <script lang="ts">
 import { usePageFrontmatter, useThemeLocaleData } from "@vuepress/client";
 import { computed, defineComponent } from "vue";
-import type { ThemeHopeOptions } from "../types";
-import Baidu from "./icons/media/Baidu.vue";
-import Bitbucket from "./icons/media/Bitbucket.vue";
-import Dingding from "./icons/media/Dingding.vue";
-import Discord from "./icons/media/Discord.vue";
-import Dribbble from "./icons/media/Dribbble.vue";
-import Evernote from "./icons/media/Evernote.vue";
-import Facebook from "./icons/media/Facebook.vue";
-import Flipboard from "./icons/media/Flipboard.vue";
-import Gitee from "./icons/media/Gitee.vue";
-import Github from "./icons/media/Github.vue";
-import Gitlab from "./icons/media/Gitlab.vue";
-import Gmail from "./icons/media/Gmail.vue";
-import Instagram from "./icons/media/Instagram.vue";
-import Lines from "./icons/media/Lines.vue";
-import Linkedin from "./icons/media/Linkedin.vue";
-import Pinterest from "./icons/media/Pinterest.vue";
-import Pocket from "./icons/media/Pocket.vue";
-import QQ from "./icons/media/QQ.vue";
-import Qzone from "./icons/media/Qzone.vue";
-import Reddit from "./icons/media/Reddit.vue";
-import Rss from "./icons/media/Rss.vue";
-import Steam from "./icons/media/Steam.vue";
-import Twitter from "./icons/media/Twitter.vue";
-import Wechat from "./icons/media/Wechat.vue";
-import Weibo from "./icons/media/Weibo.vue";
-import Whatsapp from "./icons/media/Whatsapp.vue";
-import Youtube from "./icons/media/Youtube.vue";
-import Zhihu from "./icons/media/Zhihu.vue";
-import type { BlogMedia } from "../types";
+import type { ThemeHopeOptions } from "../../types";
+import Baidu from "./icons/Baidu.vue";
+import Bitbucket from "./icons/Bitbucket.vue";
+import Dingding from "./icons/Dingding.vue";
+import Discord from "./icons/Discord.vue";
+import Dribbble from "./icons/Dribbble.vue";
+import Evernote from "./icons/Evernote.vue";
+import Facebook from "./icons/Facebook.vue";
+import Flipboard from "./icons/Flipboard.vue";
+import Gitee from "./icons/Gitee.vue";
+import Github from "./icons/Github.vue";
+import Gitlab from "./icons/Gitlab.vue";
+import Gmail from "./icons/Gmail.vue";
+import Instagram from "./icons/Instagram.vue";
+import Lines from "./icons/Lines.vue";
+import Linkedin from "./icons/Linkedin.vue";
+import Pinterest from "./icons/Pinterest.vue";
+import Pocket from "./icons/Pocket.vue";
+import QQ from "./icons/QQ.vue";
+import Qzone from "./icons/Qzone.vue";
+import Reddit from "./icons/Reddit.vue";
+import Rss from "./icons/Rss.vue";
+import Steam from "./icons/Steam.vue";
+import Twitter from "./icons/Twitter.vue";
+import Wechat from "./icons/Wechat.vue";
+import Weibo from "./icons/Weibo.vue";
+import Whatsapp from "./icons/Whatsapp.vue";
+import Youtube from "./icons/Youtube.vue";
+import Zhihu from "./icons/Zhihu.vue";
+import type { BlogMedia } from "../../types";
 
 const medias: BlogMedia[] = [
   "Baidu",
@@ -164,7 +164,7 @@ export default defineComponent({
 </script>
 
 <style lang="stylus">
-@require '../styles/palette'
+@require '../../styles/palette'
 
 .media-links-wrapper
   display flex

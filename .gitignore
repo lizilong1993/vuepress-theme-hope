@@ -5,7 +5,7 @@ node_modules/
 lib/
 
 # VuePress Output
-dist/**
+dist/
 
 # VS Code Config file
 .vscode/

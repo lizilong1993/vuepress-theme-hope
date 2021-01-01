@@ -35,6 +35,7 @@
     "copy": "cpx \"src/**/*.{d.ts,vue,styl}\" lib"
   },
   "dependencies": {
+    "@types/lodash.throttle": "^4.1.6",
     "@vuepress/client": "2.0.0-alpha.13",
     "@vuepress/core": "2.0.0-alpha.13",
     "@vuepress/plugin-active-header-links": "2.0.0-alpha.13",
@@ -47,6 +48,7 @@
     "@vuepress/plugin-palette-stylus": "2.0.0-alpha.13",
     "@vuepress/shared": "2.0.0-alpha.13",
     "@vuepress/utils": "2.0.0-alpha.13",
+    "lodash.throttle": "^4.1.1",
     "prismjs": "^1.22.0",
     "stylus": "^0.54.8",
     "stylus-loader": "^4.3.0",

@@ -1,3 +1,4 @@
+// FIXME: Fix this directive
 import type { Directive, DirectiveBinding, VNode } from "vue";
 
 type Event = TouchEvent | MouseEvent;

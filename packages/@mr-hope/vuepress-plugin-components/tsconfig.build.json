@@ -1,5 +1,6 @@
 {
   "extends": "../../../tsconfig.base.json",
+  "references": [{ "path": "../vuepress-shared/tsconfig.build.json" }],
   "compilerOptions": {
     "module": "ESNext",
     "target": "ESNext",

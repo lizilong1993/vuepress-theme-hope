@@ -1,11 +1,14 @@
 # Node modules
 node_modules/
 
+# Dist files
+lib/
+
 # VuePress Output
 dist/**
 
-# Dist files
-lib/
+# VS Code Config file
+.vscode/
 
 # Typescript build info
 *.tsbuildinfo

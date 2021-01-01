@@ -1,8 +1,8 @@
 {
-  "name": "test",
+  "name": "demo",
   "version": "1.7.9",
   "private": true,
-  "description": "Tests for vuepress-theme-hope",
+  "description": "Demo for vuepress-theme-hope",
   "license": "MIT",
   "author": "Mr.Hope",
   "scripts": {
@@ -12,9 +12,9 @@
     "serve": "vuepress dev src"
   },
   "devDependencies": {
+    "@vuepress/cli": "2.0.0-alpha.13",
     "@vuepress/plugin-pwa": "2.0.0-alpha.13",
     "@vuepress/plugin-pwa-popup": "2.0.0-alpha.13",
-    "vuepress": "2.0.0-alpha.13",
     "vuepress-theme-hope": "2.0.0-alpha.0"
   }
 }

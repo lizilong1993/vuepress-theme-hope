@@ -1,0 +1,8 @@
+# Source Files
+src/
+
+# Jest Tests
+__tests/
+
+# Typescript config
+tsconfig.*

@@ -4,6 +4,9 @@
     {
       "path": "./packages/@mr-hope/vuepress-plugin-components/tsconfig.build.json"
     },
+    {
+      "path": "./packages/@mr-hope/vuepress-plugin-reading-time/tsconfig.build.json"
+    },
     { "path": "./packages/@mr-hope/vuepress-shared/tsconfig.build.json" },
     { "path": "./packages/vuepress-theme-hope/tsconfig.build.json" }
   ],

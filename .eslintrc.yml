@@ -160,19 +160,10 @@ overrides:
         - off
 
   - files:
-      - "**/tests/unit/**/*.spec.{j,t}s?(x)"
-      - "**/__tests__/*.{j,t}s?(x)"
-      - "**/test/**/*.spec.js"
-      - "**/test/**/*.spec.ts"
-      - "**/test/**/*.test.js"
-      - "**/test/**/*.test.ts"
+      - "**/__tests__/**/*.spec.{j,t}sx?"
 
     env:
-      mocha: true
-
-  - files:
-      - "**/test/**/*.spec.ts"
-      - "**/test/**/*.test.ts"
+      jest: true
 
     rules:
       "@typescript-eslint/no-explicit-any":

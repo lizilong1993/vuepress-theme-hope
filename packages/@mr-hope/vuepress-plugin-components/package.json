@@ -35,6 +35,9 @@
     "screenfull": "^5.1.0",
     "vue-router": "^4.0.2"
   },
+  "peerDependencies": {
+    "vuepress": "^2.0.0-alpha.13"
+  },
   "publishConfig": {
     "access": "public"
   }

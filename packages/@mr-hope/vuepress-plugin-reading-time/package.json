@@ -7,7 +7,7 @@
     "reading time",
     "word count"
   ],
-  "homepage": "https://github.com/Mister-Hope/vuepress-theme-hope/tree/v2/packages/@mr-hope/vuepress-plugin-read-time#readme",
+  "homepage": "https://vuepress-reading-time.mrhope.site",
   "bugs": {
     "url": "https://github.com/Mister-Hope/vuepress-theme-hope/issues"
   },
@@ -29,6 +29,9 @@
     "clean": "rimraf lib *.tsbuildinfo",
     "copy": "cpx \"src/**/*.{d.ts,vue,styl}\" lib",
     "test": "jest"
+  },
+  "peerDependencies": {
+    "vuepress": "^2.0.0-alpha.13"
   },
   "devDependencies": {
     "@types/jest": "26.0.19",

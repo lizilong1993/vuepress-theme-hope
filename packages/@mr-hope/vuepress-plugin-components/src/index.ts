@@ -23,14 +23,12 @@ const componentPlugin: Plugin<ComponentOptions> = (options, app) => {
       COMPONENT_I18N: componentConfig,
     }),
 
-    clientAppRootComponentFiles: [
-      path.resolve(__dirname, "./components/BackToTop.vue"),
-      path.resolve(__dirname, "./components/BreadCrumb.vue"),
-      path.resolve(__dirname, "./components/Pagination.vue"),
-      path.resolve(__dirname, "./components/ScreenFull.vue"),
-    ],
+    clientAppEnhanceFiles: path.resolve(__dirname, "./clientAppEnhance.ts"),
 
-    globalUIComponents: "BackToTop",
+    clientAppRootComponentFiles: path.resolve(
+      __dirname,
+      "./components/BackToTop.vue"
+    ),
   };
 };
 

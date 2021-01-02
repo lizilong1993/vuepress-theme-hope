@@ -113,8 +113,6 @@ export interface ReadingTimeI18NConfig {
 export type PluginI18nConvert<T> = Record<LangPaths, T> & { "/"?: T };
 
 export interface PluginI18nConfig {
-  /** Muti language config for markdown containers */
-  container: Record<string, PluginI18nConvert<string>>;
   /** Muti language config for copy code */
   copyCode: PluginI18nConvert<CopyCodeI18NConfig>;
   /** Muti language config for Page Info */

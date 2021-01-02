@@ -5,6 +5,7 @@
   "workspaces": [
     "demo/",
     "packages/@mr-hope/*",
+    "packages/vuepress-plugin-md-enhance/",
     "packages/vuepress-theme-hope/"
   ],
   "scripts": {

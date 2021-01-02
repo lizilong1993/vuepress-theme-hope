@@ -1,4 +1,4 @@
-import { LangPaths } from "@mr-hope/vuepress-shared";
+import type { LangPaths } from "@mr-hope/vuepress-shared";
 import type { ComponentI18NConfig } from "./types";
 
 export const i18n: Record<LangPaths, ComponentI18NConfig> = {

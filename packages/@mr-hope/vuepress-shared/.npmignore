@@ -1,3 +1,8 @@
+# Source Files
 src/
 
+# Jest Tests
+__tests__/
+
+# Typescript config
 tsconfig.*

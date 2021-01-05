@@ -36,7 +36,7 @@
     "vue-router": "^4.0.2"
   },
   "peerDependencies": {
-    "vuepress": "^2.0.0-alpha.13"
+    "vuepress": "^2.0.0-alpha.15"
   },
   "publishConfig": {
     "access": "public"

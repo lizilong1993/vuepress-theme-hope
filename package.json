@@ -19,6 +19,7 @@
     "lerna:bootstrap": "lerna bootstrap",
     "lerna:clean": "lerna clean",
     "lint": "prettier --check --write . && eslint . --ext .js,.ts,.vue --fix && markdownlint **/*.md --ignore **/node_modules/** --fix",
+    "lint:eslint": "eslint . --ext .js,.ts,.vue --fix",
     "packages:check-update": "lerna exec -- ncu --timeout 600000 && ncu --timeout 600000",
     "packages:update": "lerna exec -- ncu -u --timeout 600000 && ncu -u --timeout 600000 && yarn install && yarn upgrade",
     "test": "jest -i"

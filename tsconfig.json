@@ -1,15 +1,8 @@
 {
   "extends": "./tsconfig.base.json",
   "references": [
-    {
-      "path": "./packages/@mr-hope/vuepress-plugin-components/tsconfig.build.json"
-    },
-    {
-      "path": "./packages/@mr-hope/vuepress-plugin-reading-time/tsconfig.build.json"
-    },
-    { "path": "./packages/@mr-hope/vuepress-shared/tsconfig.build.json" },
-    { "path": "./packages/vuepress-plugin-md-enhance/tsconfig.build.json" },
-    { "path": "./packages/vuepress-theme-hope/tsconfig.build.json" }
+    { "path": "./tsconfig.build.json" },
+    { "path": "./tsconfig.eslint.json" }
   ],
-  "include": []
+  "files": []
 }

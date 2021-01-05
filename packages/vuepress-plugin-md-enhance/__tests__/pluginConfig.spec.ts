@@ -15,7 +15,7 @@ describe("Test pluginConfig generate", () => {
 
     const pluginConfig = resolvePlugin(option, themeConfig);
 
-    expect((pluginConfig[0] as any)[1].defaultTitle["/"]).to.be.equal("Info");
+    expect((pluginConfig[0] as any)[1].defaultTitle["/"]).toEqual("Info");
   });
 
   it("should handle baseLang option", () => {
@@ -32,8 +32,6 @@ describe("Test pluginConfig generate", () => {
 
     const pluginConfig = resolvePlugin(option, themeConfig);
 
-    expect((pluginConfig[0] as any)[1].defaultTitle["/"]).to.be.equal(
-      "相关信息"
-    );
+    expect((pluginConfig[0] as any)[1].defaultTitle["/"]).toEqual("相关信息");
   });
 });

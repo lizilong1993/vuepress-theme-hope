@@ -1,0 +1,37 @@
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+
+@function get-value($variable, $isDark) {
+  @if meta.type-of($variable) == string {
+    @return #{$variable};
+  } @else if meta.type-of($variable) == list {
+    @return #{if($isDark, list.nth($variable, 1), list.nth($variable, 0))};
+  }
+}
+
+@mixin inject-value($module) {
+  $variables: meta.module-variables($module);
+
+  @each $varName, $value in $variables {
+    --#{$varName}: $value;
+  }
+}
+
+@mixin inject-color($module, $isDark: false) {
+  $variables: meta.module-variables($module);
+
+  @each $varName, $value in $variables {
+    @if meta.type-of($variable) ==map {
+      @each $ammont in map.get($value, "ammont") {
+        --#{$varName}-#{if($ammont > 0,"l","d")}#{$ammont / 1%}: color.scale(
+          get-value(map.get($value, "color"), $isDark),
+          $lightness: $ammont
+        );
+      }
+    } @else {
+      --#{$varName}: get-value($value, $isDark);
+    }
+  }
+}

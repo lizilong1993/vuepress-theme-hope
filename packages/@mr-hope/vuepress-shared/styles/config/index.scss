@@ -1,0 +1,20 @@
+@use 'break-point';
+@use 'color';
+@use 'layout';
+@use 'inject';
+
+:root {
+  @include inject-value("break-point");
+  @include inject-value("layout");
+}
+
+:root,
+body.theme-light {
+  @include inject-color("color", false);
+  @include inject-color("colors", false);
+}
+
+body.theme-dark {
+  @include inject-color("color", true);
+  @include inject-color("colors", true);
+}

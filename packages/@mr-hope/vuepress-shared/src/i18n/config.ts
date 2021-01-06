@@ -1,4 +1,4 @@
-import { HopeThemeLocaleConfigItem, LangPaths, Langs } from "./types";
+import type { HopeThemeLocaleConfigItem, LangPaths, Langs } from "./types";
 
 export const langs: Langs[] = ["zh-CN", "en-US", "vi-VN"];
 

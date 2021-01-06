@@ -8,9 +8,10 @@ import type { Langs, LangPaths, HopeThemeLocaleConfigItem } from "./types";
 
 const reportStatus: Record<string, boolean> = {};
 
+/** Check if the lang is supported */
 export const checkLang = (lang: Langs): boolean => langs.includes(lang);
 
-/** get path from language */
+/** Get path from language */
 export const lang2Path = (lang = ""): LangPaths | "/" => {
   if (lang2PathConfig[lang as Langs]) return lang2PathConfig[lang as Langs];
 
@@ -19,7 +20,7 @@ export const lang2Path = (lang = ""): LangPaths | "/" => {
   return "/";
 };
 
-/** get language from path */
+/** Get language from path */
 export const path2Lang = (path = ""): Langs => {
   if (path2langConfig[path as LangPaths])
     return path2langConfig[path as LangPaths];
@@ -47,11 +48,6 @@ Note: This warning will be shown only once.`
   return localesConfig["en-US"];
 };
 
+/** Get Default ThemeLocale */
 export const getDefaultLocale = (): HopeThemeLocaleConfigItem =>
   localesConfig["en-US"];
-
-export const capitalize = (word: string): string =>
-  `${word.charAt(0).toUpperCase()}${word.slice(1)}`;
-
-export const strictCapitalize = (word: string): string =>
-  `${word.charAt(0).toUpperCase()}${word.slice(1).toLowerCase()}`;

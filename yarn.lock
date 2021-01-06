@@ -2545,7 +2545,7 @@
     vue "^3.0.4"
     vue-router "4.0.1"
 
-"@vuepress/core@2.0.0-alpha.15":
+"@vuepress/core@2.0.0-alpha.15", "@vuepress/core@^2.0.0-alpha.15":
   version "2.0.0-alpha.15"
   resolved "https://registry.yarnpkg.com/@vuepress/core/-/core-2.0.0-alpha.15.tgz#4c4cc80cb4915aa857808e7c1b221983459bca93"
   integrity sha512-7/blqrIcRyxXou5QPGJkKIIWKRbv5oyyjs5rbwZm082xA3EcBEspqEPiuqtNXm+SQuOA4Q9DHQ8VDYMKNMFH5w==
@@ -2710,7 +2710,7 @@
     vue "^3.0.4"
     vue-router "4.0.1"
 
-"@vuepress/utils@2.0.0-alpha.15":
+"@vuepress/utils@2.0.0-alpha.15", "@vuepress/utils@^2.0.0-alpha.15":
   version "2.0.0-alpha.15"
   resolved "https://registry.yarnpkg.com/@vuepress/utils/-/utils-2.0.0-alpha.15.tgz#b20853fe393b45fb35c29699e346c66a3bcb9f64"
   integrity sha512-jo7H96+nN8wwN2d4r27zq5vpHyHSj8GTO29Alo2zjxhlveeClPvlmbwLZXQYtFB0cJfHY7UBYv9GYaCSl0yXiA==

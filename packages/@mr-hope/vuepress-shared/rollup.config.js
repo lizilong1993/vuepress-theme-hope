@@ -1,0 +1,24 @@
+// import resolve from "@rollup/plugin-node-resolve";
+// import commonjs from "@rollup/plugin-commonjs";
+import pkg from "./package.json";
+import json from "@rollup/plugin-json";
+import typescript from "@rollup/plugin-typescript";
+import dts from "rollup-plugin-dts";
+
+export default [
+  {
+    input: "./src/index.ts",
+    output: [{ file: pkg.main, format: "cjs", sourcemap: true }],
+    plugins: [json(), typescript({ tsconfig: "tsconfig.cjs.json" })],
+  },
+  {
+    input: "./src/index.ts",
+    output: [{ file: pkg.module, format: "esm", sourcemap: true }],
+    plugins: [json(), typescript({ tsconfig: "tsconfig.esm.json" })],
+  },
+  {
+    input: "./src/index.ts",
+    output: [{ file: pkg.types, format: "esm", sourcemap: true }],
+    plugins: [dts()],
+  },
+];

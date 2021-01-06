@@ -10,5 +10,8 @@ dist/
 # VS Code Config file
 .vscode/
 
+# Rollup Cache
+.rollup.cache/
+
 # Typescript build info
 *.tsbuildinfo

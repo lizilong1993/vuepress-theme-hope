@@ -9,12 +9,12 @@ export default [
   {
     input: "./src/index.ts",
     output: [{ file: pkg.main, format: "cjs", sourcemap: true }],
-    plugins: [json(), typescript({ tsconfig: "tsconfig.cjs.json" })],
+    plugins: [json(), typescript()],
   },
   {
     input: "./src/index.ts",
     output: [{ file: pkg.module, format: "esm", sourcemap: true }],
-    plugins: [json(), typescript({ tsconfig: "tsconfig.esm.json" })],
+    plugins: [json(), typescript()],
   },
   {
     input: "./src/index.ts",
